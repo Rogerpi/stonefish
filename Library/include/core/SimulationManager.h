@@ -455,6 +455,10 @@ namespace sf
         Atmosphere* getAtmosphere();
         
         //! A method setting the gravity constant used in the simulation.
+        /*!
+         \param gravityConstant magnitude of the gravitational acceleration [m/s^2] (default 9.81)
+         \note Has to be called in BuildScenario(), because the solver initialization resets it to the default.
+         */
         void setGravity(Scalar gravityConstant);
         
         //! A method returning the gravity vector.

@@ -640,6 +640,12 @@ bool ScenarioParser::ParseEnvironment(XMLElement* element)
         return false;
     }
     sm->getNED()->Init(lat, lon, Scalar(0));
+
+    //Setup gravity (optional)
+    Scalar gravity;
+    if((item = element->FirstChildElement("gravity")) != nullptr
+       && item->QueryAttribute("value", &gravity) == XML_SUCCESS)
+        sm->setGravity(gravity);
     
     //Setup ocean
     XMLElement* ocean = element->FirstChildElement("ocean");

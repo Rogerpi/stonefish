@@ -287,7 +287,7 @@ std::vector<Renderable> Ocean::Render(const std::vector<Actuator*>& act)
     std::vector<Renderable> items(0);
     
     //Update currents data
-    glOceanCurrentsUBOData.gravity = glm::vec3(0.f,0.f,9.81f);
+    glOceanCurrentsUBOData.gravity = glVectorFromVector(SimulationApp::getApp()->getSimulationManager()->getGravity());
     glOceanCurrentsUBOData.numCurrents = 0;
 
     if(currentsEnabled)

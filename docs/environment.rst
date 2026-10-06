@@ -14,15 +14,19 @@ The basic structure of the XML tags used to define the environment is:
 
     <environment>
         <ned latitude="40.0" longitude="3.0"/> <!-- geographic coordinates of the NED origin -->
+        <gravity value="9.80665"/> <!-- optional: gravitational acceleration [m/s^2], defaults to 9.81 -->
         <!-- ocean definitions -->
         <!-- atmosphere definitions -->
     </environment>
 
-The same can be achieved in code by the following line:
+The same can be achieved in code by the following lines:
 
 .. code-block:: cpp
 
     getNED()->Init(40.0, 20.0, 0.0);
+    setGravity(9.80665);
+
+The gravity value is the magnitude of the gravitational acceleration, acting along the positive Z axis of the NED frame. If it is not specified, the default value of 9.81 m/s\ :sup:`2` is used.
 
 Ocean
 =====
