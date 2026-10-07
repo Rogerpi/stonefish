@@ -1117,7 +1117,7 @@ void SimulationManager::StepSimulation(Scalar timeStep)
 {
     SDL_LockMutex(simSettingsMutex);
     perfMon.PhysicsStarted();
-    dynamicsWorld->stepSimulation((Scalar)timeStep, 1000000, (Scalar)ssus/Scalar(1000000.0));
+    dynamicsWorld->stepSimulation((Scalar)timeStep, 1000000, Scalar(1)/sps);
     perfMon.PhysicsFinished();
     SDL_UnlockMutex(simSettingsMutex);
 

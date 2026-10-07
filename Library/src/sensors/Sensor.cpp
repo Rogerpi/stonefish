@@ -139,7 +139,7 @@ void Sensor::Update(Scalar dt)
         eleapsedTime += dt;
         Scalar invFreq = Scalar(1)/freq;
         
-        if(eleapsedTime >= invFreq)
+        if(eleapsedTime >= invFreq - Scalar(1e-9)) //Tolerate round-off in the sum of time steps
         {
             InternalUpdate(invFreq);
             eleapsedTime -= invFreq;
