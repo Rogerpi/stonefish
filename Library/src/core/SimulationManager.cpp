@@ -1151,6 +1151,7 @@ void SimulationManager::UpdateDrawingQueue()
 {
     //Build new drawing queue
     OpenGLPipeline* glPipeline = ((GraphicalSimulationApp*)SimulationApp::getApp())->getGLPipeline();
+    glPipeline->setDrawingQueueTime(getSimulationTime(true)); //Time of the scene captured below
  
     //Solids, manipulators, systems....
     for(size_t i=0; i<entities.size(); ++i)

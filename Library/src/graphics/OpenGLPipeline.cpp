@@ -88,6 +88,9 @@ OpenGLPipeline::OpenGLPipeline(RenderSettings s, HelperSettings h) : rSettings(s
         cError("Display FBO initialization failed!");
     OpenGLState::BindFramebuffer(0);
     lastSimTime = Scalar(-1);
+    drawingQueueTime = Scalar(0);
+    renderTime = Scalar(0);
+    visionDataTime = Scalar(0);
 }
 
 OpenGLPipeline::~OpenGLPipeline()
@@ -158,6 +161,16 @@ void OpenGLPipeline::PurgeSelectedDrawingQueue()
     selectedDrawingQueue.clear();
 }
 
+void OpenGLPipeline::setDrawingQueueTime(Scalar t)
+{
+    drawingQueueTime = t;
+}
+
+Scalar OpenGLPipeline::getVisionDataTime() const
+{
+    return visionDataTime;
+}
+
 bool OpenGLPipeline::isDrawingQueueEmpty()
 {
     return drawingQueue.empty();
@@ -168,9 +181,12 @@ void OpenGLPipeline::PerformDrawingQueueCopy(SimulationManager* sim)
     SDL_LockMutex(drawingQueueMutex);
 
     //Update vision sensor transforms and copy generated data to ensure consistency
+    //(the data being delivered was rendered in the previous frame, from the scene captured at renderTime)
     glMemoryBarrier(GL_PIXEL_BUFFER_BARRIER_BIT);
+    visionDataTime = renderTime;
     for(unsigned int i=0; i < content->getViewsCount(); ++i)
         content->getView(i)->UpdateTransform();
+    renderTime = drawingQueueTime;
     //Update light transforms to ensure consistency
     for(unsigned int i=0; i < content->getLightsCount(); ++i)
         content->getLight(i)->UpdateTransform();

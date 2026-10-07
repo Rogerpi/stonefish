@@ -95,6 +95,19 @@ namespace sf
         
         //! A method to get mutex of the drawing queue for thread safeness.
         SDL_mutex* getDrawingQueueMutex();
+
+        //! A method to set the simulation time at which the drawing queue was built.
+        /*!
+         \param t the simulation time [s]
+         */
+        void setDrawingQueueTime(Scalar t);
+
+        //! A method returning the simulation time of the scene shown in the vision sensor data being delivered.
+        /*!
+         Only valid inside the new data callbacks of vision sensors.
+         \return the simulation time [s]
+         */
+        Scalar getVisionDataTime() const;
         
         //! A method returning a copy of the render settings.
         RenderSettings getRenderSettings() const;
@@ -124,6 +137,9 @@ namespace sf
         GLuint screenTex;
         OpenGLContent* content;
         Scalar lastSimTime;
+        Scalar drawingQueueTime; //Simulation time of the scene in the drawing queue
+        Scalar renderTime;       //Simulation time of the scene being rendered
+        Scalar visionDataTime;   //Simulation time of the scene rendered in the previous frame (vision sensor data delivered now)
     };
 }
 

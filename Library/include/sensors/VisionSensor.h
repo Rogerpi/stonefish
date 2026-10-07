@@ -106,6 +106,15 @@ namespace sf
 
         //! A method returning a pointer to the underlaying OpenGLView object.
         virtual OpenGLView* getOpenGLView() const = 0;
+
+        //! A method returning the timestamp of the data delivered to the new data callback.
+        /*!
+         The timestamp is the simulation time of the scene that was rendered (with the time offset applied,
+         as in sensor samples), which can differ from the time at which the data is delivered.
+         Only valid inside the new data callback.
+         \return the timestamp [s]
+         */
+        Scalar getDataTimestamp() const;
         
     protected:
         virtual void InitGraphics(bool& seesParticles) = 0;

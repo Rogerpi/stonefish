@@ -25,7 +25,8 @@
 
 #include "sensors/VisionSensor.h"
 
-#include "core/SimulationApp.h"
+#include "core/GraphicalSimulationApp.h"
+#include "graphics/OpenGLPipeline.h"
 #include "core/SimulationManager.h"
 #include "entities/StaticEntity.h"
 #include "entities/SolidEntity.h"
@@ -76,6 +77,11 @@ void VisionSensor::getSensorVelocity(Vector3& linear, Vector3& angular) const
         linear = V0();
         angular = V0();
     }
+}
+
+Scalar VisionSensor::getDataTimestamp() const
+{
+    return ((GraphicalSimulationApp*)SimulationApp::getApp())->getGLPipeline()->getVisionDataTime();
 }
 
 SensorType VisionSensor::getType() const
