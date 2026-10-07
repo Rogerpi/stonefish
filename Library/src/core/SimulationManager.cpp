@@ -1667,6 +1667,12 @@ void SimulationManager::SimulationPostTickCallback(btDynamicsWorld *world, Scala
 {
     SimulationManager* simManager = (SimulationManager*)world->getWorldUserInfo();
     
+    //Update simulation time (the state has already been integrated to the end of the step,
+    //so measurements taken below must be stamped with the new time)
+    SDL_LockMutex(simManager->simInfoMutex);
+    simManager->simulationTime += timeStep;
+    SDL_UnlockMutex(simManager->simInfoMutex);
+    
     //Update motion data
     for(size_t i = 0; i < simManager->entities.size(); ++i)
     {
@@ -1723,9 +1729,6 @@ void SimulationManager::SimulationPostTickCallback(btDynamicsWorld *world, Scala
         }
     }
 
-    //Update simulation time
-    simManager->simulationTime += timeStep;
-    
     //Optional method to update some post simulation data (like ROS messages...)
     if (simManager->getCallSimulationStepCompleted())
     {
